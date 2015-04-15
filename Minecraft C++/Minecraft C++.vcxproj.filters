@@ -18,5 +18,19 @@
     <ClCompile Include="src\main.cc">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\cube.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\chunk.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\cube.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\chunk.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

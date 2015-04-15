@@ -80,7 +80,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\chunk.cc" />
+    <ClCompile Include="src\cube.cc" />
     <ClCompile Include="src\main.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\chunk.h" />
+    <ClInclude Include="include\cube.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
