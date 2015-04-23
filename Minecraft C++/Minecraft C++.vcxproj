@@ -82,11 +82,17 @@
   <ItemGroup>
     <ClCompile Include="src\chunk.cc" />
     <ClCompile Include="src\cube.cc" />
+    <ClCompile Include="src\game_manager.cc" />
+    <ClCompile Include="src\imaterial.cc" />
     <ClCompile Include="src\main.cc" />
+    <ClCompile Include="src\simplexnoise.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\chunk.h" />
     <ClInclude Include="include\cube.h" />
+    <ClInclude Include="include\game_manager.h" />
+    <ClInclude Include="include\imaterial.h" />
+    <ClInclude Include="include\simplexnoise.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

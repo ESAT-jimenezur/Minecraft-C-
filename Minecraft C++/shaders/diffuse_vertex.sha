@@ -1,0 +1,19 @@
+/* DIFUSE SHADER*/
+#version 330
+uniform mat4 u_model_matrix;
+uniform mat4 u_view_matrix;
+uniform mat4 u_projection_matrix;
+uniform vec4 u_color;
+
+layout (location=0) in vec3 a_position;
+layout (location=1) in vec3 a_normal;
+
+out vec4 color;
+
+void main() {
+    vec4 rgb_color = vec4(1.0, 1.0, 0.0, 1.0);
+    vec4 light_color = vec4(1.0, 1.0, 1.0, 1.0);
+    vec4 light_vector = vec4(1.0, 0.5, 0.3, 1.0);
+    gl_Position = u_projection_matrix*u_view_matrix*u_model_matrix*vec4(a_position, 1.0);
+    color = vec4(u_color * light_color * max(0, dot(u_model_matrix * normalize(vec4(a_normal, 0.0)), normalize(light_vector))));
+};

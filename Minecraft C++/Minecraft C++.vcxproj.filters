@@ -24,12 +24,30 @@
     <ClCompile Include="src\chunk.cc">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_manager.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imaterial.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\simplexnoise.cc">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\cube.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\chunk.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game_manager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imaterial.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\simplexnoise.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

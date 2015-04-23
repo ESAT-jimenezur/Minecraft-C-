@@ -1,0 +1,54 @@
+#ifndef __IMATERIAL_H__
+#define __IMATERIAL_H__
+
+#include "stdio.h"
+#include "conio.h"
+#include <EDK3\geometry.h>
+#include <EDK3\camera.h>
+#include <EDK3\drawable.h>
+#include <EDK3\matdiffusetexture.h>
+#include <EDK3\texture.h>
+#include <EDK3\dev\gpumanager.h>
+#include "EDK3\dev\buffer.h"
+#include <EDK3\dev\shader.h>
+#include <EDK3\dev\program.h>
+#include <EDK3\dev\glew.h>
+#include <EDK3\dev\opengl.h>
+#include <EDK3\materialsettings.h>
+
+
+  class iMaterial : public EDK3::Material{
+
+  public:
+    iMaterial();
+
+    unsigned int num_attributes_required() const;
+    EDK3::Attribute attribute_at_index(const unsigned int attrib_idx) const;
+    EDK3::Type attribute_type_at_index(const unsigned int attrib_idx) const;
+
+    bool enable(const EDK3::MaterialSettings *mat_settings) const;
+    void setupCamera(const EDK3::Camera* camera) const;
+    void setupModel(const float m[16]) const;
+
+
+    class Settings : public EDK3::MaterialSettings {
+    public:
+      Settings() {}
+      void set_color(const float v[4]) { memcpy(data_, v, sizeof(data_)); }
+      const float *color() const { return data_; }
+    protected:
+      virtual ~Settings() {}
+    private:
+      Settings(const Settings&);
+      Settings& operator=(const Settings&);
+      float data_[4];
+    };
+
+  private:
+    ~iMaterial(){}
+    EDK3::ref_ptr<EDK3::dev::Program> program_;
+    EDK3::ref_ptr<EDK3::dev::Shader> vertex_shader_;
+    EDK3::ref_ptr<EDK3::dev::Shader> fragment_shader_;
+
+  };
+#endif //__IMATERIAL_H__
