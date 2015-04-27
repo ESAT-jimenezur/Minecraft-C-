@@ -1,28 +1,36 @@
+#ifndef __CUBE_H__
+#define __CUBE_H__
+
+#include "stdio.h"
+#include "conio.h"
+#include <EDK3\geometry.h>
+#include <EDK3\camera.h>
+#include <EDK3\drawable.h>
+#include <EDK3\matdiffusetexture.h>
+#include <EDK3\texture.h>
+#include <EDK3\dev\gpumanager.h>
+#include "EDK3\dev\buffer.h"
 
 
-enum CubeType{
-  kCubeType_Default = 0,
 
-  kCubeType_Grass,
-  kCubeType_Dirt,
-  kCubeType_Water,
-  kCubeType_Stone,
-  kCubeType_Wood,
-  kCubeType_Sand,
+class Cube : virtual public EDK3::Geometry{
 
-  kCubeType_NumTypes,
-};
-
-class Cube{
 public:
-  Cube();
-  ~Cube();
 
-  bool isActive();
-  void setActive(bool active);
+  Cube();
+
+  virtual bool bindAttribute(const EDK3::Attribute a, unsigned int where_to_bind_attribute) const;
+
+  virtual void render()const;
+  void CreateCube(int size);
+
+protected:
+  virtual ~Cube();
 
 private:
-  bool m_active_;
-
-  CubeType cube_type_;
+  EDK3::ref_ptr<EDK3::dev::Buffer> databuffer;
+  EDK3::ref_ptr<EDK3::dev::Buffer> elements;
 };
+
+
+#endif //__CUBE_H__

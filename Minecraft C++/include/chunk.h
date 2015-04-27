@@ -23,13 +23,21 @@ public:
   void createMesh();
   void createCube(float x, float y, float z);
 
-  
+  bool bindAttribute(const EDK3::Attribute a, unsigned int where_to_bind_attribute)const;
+  void render()const;
 
 private:
   static const int CHUNK_WIDTH = 10;
-  static const int CHUNK_HEIGHT = 10;
-  static const int CHUNK_DEEP = 10;
+  static const int CHUNK_HEIGHT = 1;
+  static const int CHUNK_DEEP = 1;
   float noise;
+
+  std::vector<float> chunk_vertex_;
+  std::vector<float> chunk_normal_;
+  std::vector<float> chunk_uv_;
+  std::vector<float> chunk_index_;
+
+  EDK3::ref_ptr<EDK3::dev::Buffer> buffer_;
 
   float map3d[CHUNK_WIDTH][CHUNK_HEIGHT][CHUNK_DEEP];
 };

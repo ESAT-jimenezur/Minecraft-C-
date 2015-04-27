@@ -20,7 +20,8 @@ int ESAT::main(int argc, char **argv) {
   chunk.init(); // Clear array and make some things
   chunk.setupNoise(); // Fill our 3d map array with noise data
   chunk.createMesh(); // Parse 3d map array and draw faces
-  
+ 
+
   while (ESAT::WindowIsOpened() && !ESAT::IsSpecialKeyDown(ESAT::kSpecialKey_Escape)) {
     //ESAT::DrawBegin();
 
