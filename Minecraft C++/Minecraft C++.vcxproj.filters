@@ -33,6 +33,9 @@
     <ClCompile Include="src\simplexnoise.cc">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\vector3.cc">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\cube.h">
@@ -48,6 +51,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\simplexnoise.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vector3.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

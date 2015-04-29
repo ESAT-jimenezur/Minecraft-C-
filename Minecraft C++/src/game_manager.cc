@@ -50,8 +50,8 @@ GameManager::GameManager() {
 
   // Setup camera
   game_state_.camera.alloc();
-  float pos[] = { 20, 40, -25 };
-  float view[] = { 0, 0, -120 };
+  float pos[] = { 0, 0, 200 };
+  float view[] = { 0, 0, 200 };
   game_state_.camera->set_position(pos);
   game_state_.camera->set_clear_color(88.0f, 88.0f, 88.0f, 1.0f);
   game_state_.camera->set_view_direction(view);
@@ -73,14 +73,60 @@ void GameManager::render(){
 }
 
 void GameManager::loop(){
+  mouseInput();
+  render();
+}
+
+void GameManager::mouseInput(){
+
   double mx = ESAT::MousePositionX();
   double my = ESAT::MousePositionY();
-  double p = sin(-my / 200) * 220;
-  float pos[] = { p*cos(mx / 100), cos(-my / 200) * 220, p*sin(mx / 100) };
-  float view[] = { -pos[0], -pos[1], -pos[2] };
-  //game_state_.camera->set_position(pos);
-  game_state_.camera->set_view_direction(view);
+
+  if (first_mouse_){
+    camera_last_x_ = mx;
+    camera_last_y_ = my;
+    first_mouse_ = false;
+  }
+
+  float camera_offset_x_ = mx - camera_last_x_;
+  float camera_offset_y_ = my - camera_last_y_;
+
+  
+  camera_last_x_ = mx;
+  camera_last_y_ = my;
+
+  camera_offset_x_ *= camera_sensivity_;
+  camera_offset_y_ *= camera_sensivity_;
+
+  camera_yaw_ += camera_offset_x_;
+  camera_pitch_ += camera_offset_y_;
+  
+  /*
+  if (camera_pitch_ > 89.0f){
+    camera_pitch_ = 89.0f;
+  }
+  if (camera_pitch_ < -89.0f){
+    camera_pitch_ = -89.0f;
+  }*/
+  
+
+  Vector3 camera_front_;
+  camera_front_.x = cos(degreesToRadians(camera_yaw_)) * cos(degreesToRadians(camera_pitch_));
+  camera_front_.y = -sin(degreesToRadians(camera_pitch_));
+  camera_front_.z= sin(degreesToRadians(camera_yaw_)) * cos(degreesToRadians(camera_pitch_));
+  
+  camera_front_ = camera_front_.normalize();
+  
+  float camera_view_[] = { camera_front_.x, camera_front_.y, camera_front_.z };
+
+  printf("%f %f %f\n", camera_front_.x, camera_front_.y, camera_front_.z);
+  game_state_.camera->set_view_direction(camera_view_);
+}
 
 
-  render();
+double GameManager::degreesToRadians(double deg) {
+  return deg * M_PI / 180;
+}
+double GameManager::radiansToDegrees(double rad) {
+  return rad * 180 / M_PI;
 }

@@ -86,6 +86,7 @@
     <ClCompile Include="src\imaterial.cc" />
     <ClCompile Include="src\main.cc" />
     <ClCompile Include="src\simplexnoise.cc" />
+    <ClCompile Include="src\vector3.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\chunk.h" />
@@ -93,6 +94,7 @@
     <ClInclude Include="include\game_manager.h" />
     <ClInclude Include="include\imaterial.h" />
     <ClInclude Include="include\simplexnoise.h" />
+    <ClInclude Include="include\vector3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

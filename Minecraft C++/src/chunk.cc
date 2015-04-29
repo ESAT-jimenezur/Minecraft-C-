@@ -49,13 +49,15 @@ void Chunk::createCube(float x, float y, float z){
 
 void Chunk::setupNoise(){
   // -0.3 Cube; aire
+  createCube(10 * 5, 5, 5);
+  
   for (int x = 0; x < CHUNK_WIDTH; ++x) {
     for (int y = 0; y < CHUNK_HEIGHT; ++y) {
       for (int z = 0; z < CHUNK_DEEP; ++z) {
         noise = octave_noise_3d(3, 1, 0.02f, x, y, z);
         if (noise <= 0.3f){
-          //createCube(x * 5, y * 5, z * 5);
-          map3d[x][y][z] = 1.0f;
+          createCube(x * 5, y * 5, z * 5);
+          //map3d[x][y][z] = 1.0f;
         }
         else{
           map3d[x][y][z] = noise;
