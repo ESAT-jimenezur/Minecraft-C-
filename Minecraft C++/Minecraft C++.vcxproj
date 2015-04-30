@@ -83,6 +83,7 @@
     <ClCompile Include="src\chunk.cc" />
     <ClCompile Include="src\cube.cc" />
     <ClCompile Include="src\game_manager.cc" />
+    <ClCompile Include="src\gui.cc" />
     <ClCompile Include="src\imaterial.cc" />
     <ClCompile Include="src\main.cc" />
     <ClCompile Include="src\simplexnoise.cc" />
@@ -92,6 +93,7 @@
     <ClInclude Include="include\chunk.h" />
     <ClInclude Include="include\cube.h" />
     <ClInclude Include="include\game_manager.h" />
+    <ClInclude Include="include\gui.h" />
     <ClInclude Include="include\imaterial.h" />
     <ClInclude Include="include\simplexnoise.h" />
     <ClInclude Include="include\vector3.h" />

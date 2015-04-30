@@ -9,7 +9,7 @@
 #include <EDK3\matdiffusetexture.h>
 #include <EDK3\texture.h>
 #include <EDK3\dev\gpumanager.h>
-#include "EDK3\dev\buffer.h"
+#include <EDK3\dev\buffer.h>
 
 
 
@@ -18,7 +18,7 @@ class Cube : virtual public EDK3::Geometry{
 public:
 
   Cube();
-
+  
   virtual bool bindAttribute(const EDK3::Attribute a, unsigned int where_to_bind_attribute) const;
 
   virtual void render()const;

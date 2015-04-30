@@ -36,6 +36,9 @@
     <ClCompile Include="src\vector3.cc">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\gui.cc">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\cube.h">
@@ -54,6 +57,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\vector3.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
