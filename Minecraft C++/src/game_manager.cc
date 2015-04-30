@@ -114,14 +114,12 @@ void GameManager::mouseInput(){
 
   Vector3 camera_front_;
   camera_front_.x = cos(degreesToRadians(camera_yaw_)) * cos(degreesToRadians(camera_pitch_));
-  camera_front_.y = -sin(degreesToRadians(camera_pitch_));
+  camera_front_.y = sin(degreesToRadians(camera_pitch_));
   camera_front_.z= sin(degreesToRadians(camera_yaw_)) * cos(degreesToRadians(camera_pitch_));
   
   camera_front_ = camera_front_.normalize();
   
   float camera_view_[] = { camera_front_.x, camera_front_.y, camera_front_.z };
-
-  //printf("%f %f %f\n", camera_front_.x, camera_front_.y, camera_front_.z);
 
   float n_camera_pos_[3];
   if (ESAT::IsKeyDown('W')){
@@ -143,7 +141,10 @@ void GameManager::mouseInput(){
     camera_position_[2] = camera_position_[2] - n_camera_pos_[2];
   }
 
-  
+  //Debug Camera Pos
+  if (ESAT::IsKeyDown('P')){
+    printf("%f - %f - %f\n", camera_position_[0], camera_position_[1], camera_position_[2]);
+  }
   
   game_state_.camera->set_position(camera_position_);
   game_state_.camera->set_view_direction(camera_view_);

@@ -49,15 +49,14 @@ void Chunk::createCube(float x, float y, float z){
 
 void Chunk::setupNoise(){
   // -0.3 Cube; aire
-  createCube(10 * 5, 5, 5);
   
   for (int x = 0; x < CHUNK_WIDTH; ++x) {
     for (int y = 0; y < CHUNK_HEIGHT; ++y) {
       for (int z = 0; z < CHUNK_DEEP; ++z) {
         noise = octave_noise_3d(3, 1, 0.02f, x, y, z);
         if (noise <= 0.3f){
-          createCube(x * 5, y * 5, z * 5);
-          //map3d[x][y][z] = 1.0f;
+          //createCube(x * 5, y * 5, z * 5);
+          map3d[x][y][z] = 1.0f;
         }
         else{
           map3d[x][y][z] = noise;
@@ -182,13 +181,13 @@ void Chunk::createMesh(){
           //if (map3d[x + 1][y][z] != 1.0f){
 
             for (int i = 0; i < 12; i++){
-              chunk_vertex_.push_back(vertex[i + (12*2)]); // *2-> 2a cara
+              chunk_vertex_.push_back(vertex[i + (12*1)]); // *2-> 2a cara
             }
             for (int i = 0; i < 8; i++){
-              chunk_uv_.push_back(uvs[i +(8*2)]); // *2-> 2a cara
+              chunk_uv_.push_back(uvs[i +(8*1)]); // *2-> 2a cara
             }
             for (int i = 0; i < 12; i++){
-              chunk_normal_.push_back(normals[i + (12 * 2)]); // *2-> 2a cara
+              chunk_normal_.push_back(normals[i + (12 * 1)]); // *2-> 2a cara
             }
 
             int p_size = chunk_vertex_.size() / 3;
@@ -199,9 +198,9 @@ void Chunk::createMesh(){
 
             chunk_index_.push_back(p_size - 4);
             chunk_index_.push_back(p_size - 2);
-
             chunk_index_.push_back(p_size - 1);
 
+            printf("%d\n", p_size);
           //}
 
         
@@ -213,12 +212,12 @@ void Chunk::createMesh(){
   
   EDK3::dev::GPUManager::Instance()->newBuffer(&buffer_);
 
-  buffer_->init(sizeof(float)*num_attributes_cube);
+  buffer_->init(sizeof(float)*chunk_vertex_.size() + sizeof(float)*chunk_uv_.size() + sizeof(float)*chunk_normal_.size() + sizeof(float)*chunk_index_.size());
 
-  buffer_->uploadData(&chunk_vertex_, sizeof(chunk_vertex_)*12 + 0);
-  buffer_->uploadData(&chunk_uv_, sizeof(chunk_uv_)* 8 + sizeof(chunk_index_));
-  buffer_->uploadData(&chunk_normal_, sizeof(chunk_normal_)* 12 + sizeof(chunk_uv_));
-  buffer_->uploadData(&chunk_index_, sizeof(chunk_index_)* 12 + sizeof(chunk_normal_));
+  buffer_->uploadData(&chunk_vertex_[0], sizeof(float)*chunk_vertex_.size(), 0);
+  buffer_->uploadData(&chunk_uv_[0], sizeof(float)*chunk_uv_.size(), sizeof(float)*chunk_vertex_.size());
+  buffer_->uploadData(&chunk_normal_[0], sizeof(float)*chunk_normal_.size(), sizeof(float)*chunk_vertex_.size() + sizeof(float)*chunk_uv_.size());
+  buffer_->uploadData(&chunk_index_[0], sizeof(float)*chunk_index_.size(), sizeof(float)*chunk_vertex_.size() + sizeof(float)*chunk_uv_.size() + sizeof(float)*chunk_normal_.size());
 
 
   for (int i = 0; i < chunk_uv_.size(); i++){
@@ -238,13 +237,13 @@ bool Chunk::bindAttribute(const EDK3::Attribute a, unsigned int where_to_bind_at
     EDK3::dev::GPUManager::Instance()->enableVertexAttribute(buffer_.get(),
       where_to_bind_attribute,
       EDK3::T_FLOAT_2,
-      false, sizeof(float)* 72, sizeof(float)* 2);
+      false, sizeof(float) * chunk_vertex_.size(), 0);
     return true;
   case EDK3::A_NORMAL:
     EDK3::dev::GPUManager::Instance()->enableVertexAttribute(buffer_.get(),
       where_to_bind_attribute,
       EDK3::T_FLOAT_3,
-      true, sizeof(float)* 120, 0);
+      true, sizeof(float) * chunk_vertex_.size() + sizeof(float) * chunk_uv_.size(), 0);
     return true;
   }
 
@@ -253,5 +252,5 @@ bool Chunk::bindAttribute(const EDK3::Attribute a, unsigned int where_to_bind_at
 }
 
 void Chunk::render(){
-  EDK3::dev::GPUManager::Instance()->drawElements(EDK3::dev::GPUManager::DrawMode::kDrawMode_Triangles, 36, buffer_.get(), EDK3::T_UINT);
+  EDK3::dev::GPUManager::Instance()->drawElements(EDK3::dev::GPUManager::DrawMode::kDrawMode_Triangles, chunk_index_.size(), buffer_.get(), EDK3::T_UINT, sizeof(float)*chunk_vertex_.size() + sizeof(float)*chunk_uv_.size() + sizeof(float)*chunk_normal_.size());
 }

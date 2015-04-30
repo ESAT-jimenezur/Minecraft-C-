@@ -99,12 +99,12 @@ bool iMaterial::enable(const EDK3::MaterialSettings *mat_settings)const{
   return true;
 }
 
-void iMaterial::setupCamera(const EDK3::Camera* camera) const{
+void iMaterial::setupCamera(const float projecton[16], const float view[16]) const{
   int view_ = program_->get_uniform_position("u_view_matrix");
-  program_->set_uniform_value(view_, EDK3::Type::T_MAT_4x4, camera->view_matrix());
+  program_->set_uniform_value(view_, EDK3::Type::T_MAT_4x4, view);
 
   int projection_ = program_->get_uniform_position("u_projection_matrix");
-  program_->set_uniform_value(projection_, EDK3::Type::T_MAT_4x4, camera->projection_matrix());
+  program_->set_uniform_value(projection_, EDK3::Type::T_MAT_4x4, projecton);
 }
 
 void iMaterial::setupModel(const float m[16]) const{

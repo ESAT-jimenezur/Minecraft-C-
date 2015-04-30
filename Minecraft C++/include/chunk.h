@@ -28,8 +28,8 @@ public:
 
 private:
   static const int CHUNK_WIDTH = 10;
-  static const int CHUNK_HEIGHT = 1;
-  static const int CHUNK_DEEP = 1;
+  static const int CHUNK_HEIGHT = 2;
+  static const int CHUNK_DEEP = 2;
   float noise;
 
   std::vector<float> chunk_vertex_;

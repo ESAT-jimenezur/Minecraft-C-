@@ -27,7 +27,7 @@
     EDK3::Type attribute_type_at_index(const unsigned int attrib_idx) const;
 
     bool enable(const EDK3::MaterialSettings *mat_settings) const;
-    void setupCamera(const EDK3::Camera* camera) const;
+    void setupCamera(const float projecton[16], const float view[16]) const;
     void setupModel(const float m[16]) const;
 
 
