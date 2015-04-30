@@ -17,14 +17,14 @@ namespace EDK3 {
   class MatDiffuseTexture : public Material {
   public:
     MatDiffuseTexture();
-    virtual bool enable(const MaterialSettings *) const;
-    virtual void setupCamera(const float projecton[16], const float view[16]) const;
-    virtual void setupModel(const float m[16]) const;
+    bool enable(const MaterialSettings *) const;
+    void setupCamera(const Camera*) const;
+    void setupModel(const float m[16]) const;
 
-    virtual unsigned int num_attributes_required() const;
-    virtual Attribute attribute_at_index(
+    unsigned int num_attributes_required() const;
+    Attribute attribute_at_index(
         const unsigned int attrib_idx) const;
-    virtual Type attribute_type_at_index(
+    Type attribute_type_at_index(
         const unsigned int attrib_index) const;
 
     class Settings : public MaterialSettings {

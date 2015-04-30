@@ -45,14 +45,6 @@ namespace EDK3 {
       float d[] = {x,y,z};
       set_position(d);
     }
-
-    void set_HPR(float *ypr) {
-      set_HPR(ypr[0], ypr[1], ypr[2]);
-    }
-
-	  void set_rotation_xyz(float *d) {
-      set_rotation_xyz(d[0],d[1],d[2]);
-    }
     
     void set_transform(const float p[16]);
     const float* transform() const;    
@@ -62,8 +54,8 @@ namespace EDK3 {
 
     void removeChild(const Node *n);
     void removeChildByIndex(const unsigned int index);
-    // if the child exists inside the parent returns true and fills *result with the child-index
-    const bool childIndex(const Node *n, unsigned int *result) const;
+	// if the child exists inside the parent returns true and fills *result with the child-index
+	const bool childIndex(const Node *n, unsigned int *result) const;
     const unsigned int num_children() const;
 
     const Node* child(const unsigned int index) const;

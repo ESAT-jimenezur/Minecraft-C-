@@ -52,6 +52,7 @@ private:
   GameManager::GameManager();
 
   const float camera_sensivity_ = 0.4f;
+  const float movement_speed_ = 10.0f;
 
   bool first_mouse_ = true;
 
@@ -61,6 +62,8 @@ private:
   float camera_offset_;
   float camera_pitch_;
   float camera_yaw_;
+
+  float camera_position_[3];
 
   GameState game_state_;
   

@@ -23,9 +23,6 @@ namespace ESAT {
   // returns true if the window is opened, false if the window was closed
   bool WindowIsOpened();
 
-  unsigned int WindowHeight();
-  unsigned int WindowWidth();
-
   // must be declared by the user in order to use this library
   int main(int, char **);
 

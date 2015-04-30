@@ -19,7 +19,6 @@ namespace dev {
   class Shader;
   class Program;
   class Buffer;
-  class Framebuffer;
 
   class GPUManager {
   public:
@@ -119,11 +118,7 @@ namespace dev {
         const bool alpha = true);
     virtual void changeDepthMask(bool enable = true);
 
-    virtual void newFramebuffer(ref_ptr<Framebuffer> *output);
-    virtual void bindDefaultFramebuffer();
-
     static void CheckGLError(const char *msg = 0L);
-    static void EnableCheckGLError(bool v);
 
     // Called by window manager when gpu-manager needs to be initialized
     // Do not call manually.

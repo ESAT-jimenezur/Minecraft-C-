@@ -12,8 +12,6 @@
 #include "constants.h"
 
 namespace EDK3 {
-  
-  class Material;
 
   class Geometry : public Referenced {
   public:
@@ -21,8 +19,6 @@ namespace EDK3 {
           const Attribute a,
           unsigned int where_to_bind_attribute) const = 0;
     virtual void render() const = 0;
-
-    void bindAttributesAndRenderForGivenMaterial(const Material *m) const;
 
     void set_name(const char *name) { name_.copy(name, name+strlen(name)+1); }
     const char* name() const { return name_.get(); }

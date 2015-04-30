@@ -33,8 +33,6 @@ namespace EDK3 {
       F_BGR,
       F_BGRA,
       F_RGBA,
-      F_DEPTH,
-      F_DEPTH32,
     };
 
     enum Filter {
@@ -85,7 +83,6 @@ namespace EDK3 {
 
     // use the texture in the given texture unit
     virtual void bind(unsigned int textUnit) const = 0;
-    virtual unsigned int internal_id() const = 0;
 
     // Other functions to implement (all of them must be implemented)
     // Also, remember to call the parent function in order to set the value.

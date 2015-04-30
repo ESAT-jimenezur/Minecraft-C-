@@ -6,15 +6,12 @@
 // Camera Class.
 // ----------------------------------------------------------------------------
 //
-#include "referenced.h"
-#include "ref_ptr.h"
-#include "scoped_ptr.h"
+#include "Referenced.h"
 #include <vector>
 
 namespace EDK3 {
 
   class Node;
-  class RenderTarget;
 
   class Camera : public virtual Referenced {
   public:
@@ -34,11 +31,7 @@ namespace EDK3 {
     void set_view_target(const float pos[3]);
     void set_up_direction(const float pos[3]);
     void set_clear_flags(bool color, bool depth, bool stencil);
-	void set_clear_color(float r, float g, float b, float a);
-
-	// ... deprecated, will be removed:
     void set_clear_color(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
-	
 
     const float *position() const;
     const float *target() const;
@@ -62,7 +55,7 @@ namespace EDK3 {
     virtual ~Camera();
 
   private:
-    scoped_ptr<Data> data_;
+    Data * const data_;
     Camera(const Camera&);
     Camera& operator=(const Camera&);
   };

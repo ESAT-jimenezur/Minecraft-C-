@@ -50,10 +50,12 @@ GameManager::GameManager() {
 
   // Setup camera
   game_state_.camera.alloc();
-  float pos[] = { 0, 0, 200 };
+  camera_position_[0] = 0;
+  camera_position_[1] = 0;
+  camera_position_[2] = 200;
   float view[] = { 0, 0, 200 };
-  game_state_.camera->set_position(pos);
-  game_state_.camera->set_clear_color(88.0f, 88.0f, 88.0f, 1.0f);
+  game_state_.camera->set_position(camera_position_);
+  game_state_.camera->set_clear_color(0.135f, 0.206f, 0.235f, 1.0f);
   game_state_.camera->set_view_direction(view);
   game_state_.camera->setupPerspective(70, 8.0 / 6.0, 1.0f, 1500.0f);
 
@@ -119,7 +121,31 @@ void GameManager::mouseInput(){
   
   float camera_view_[] = { camera_front_.x, camera_front_.y, camera_front_.z };
 
-  printf("%f %f %f\n", camera_front_.x, camera_front_.y, camera_front_.z);
+  //printf("%f %f %f\n", camera_front_.x, camera_front_.y, camera_front_.z);
+
+  float n_camera_pos_[3];
+  if (ESAT::IsKeyDown('W')){
+    n_camera_pos_[0] = camera_view_[0] * movement_speed_;
+    n_camera_pos_[1] = camera_view_[1] * movement_speed_;
+    n_camera_pos_[2] = camera_view_[2] * movement_speed_;
+
+    camera_position_[0] = camera_position_[0] + n_camera_pos_[0];
+    camera_position_[1] = camera_position_[1] + n_camera_pos_[1];
+    camera_position_[2] = camera_position_[2] + n_camera_pos_[2];
+  }
+  else if(ESAT::IsKeyDown('S')){
+    n_camera_pos_[0] = camera_view_[0] * movement_speed_;
+    n_camera_pos_[1] = camera_view_[1] * movement_speed_;
+    n_camera_pos_[2] = camera_view_[2] * movement_speed_;
+
+    camera_position_[0] = camera_position_[0] - n_camera_pos_[0];
+    camera_position_[1] = camera_position_[1] - n_camera_pos_[1];
+    camera_position_[2] = camera_position_[2] - n_camera_pos_[2];
+  }
+
+  
+  
+  game_state_.camera->set_position(camera_position_);
   game_state_.camera->set_view_direction(camera_view_);
 }
 
