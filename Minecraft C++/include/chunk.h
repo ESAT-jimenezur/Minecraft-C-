@@ -11,7 +11,7 @@
 #include "cube.h"
 #include "simplexnoise.h"
 
-class Chunk{
+class Chunk : public EDK3::Geometry{
 public:
   Chunk();
   ~Chunk();
@@ -27,9 +27,9 @@ public:
   void render()const;
 
 private:
-  static const int CHUNK_WIDTH = 10;
-  static const int CHUNK_HEIGHT = 2;
-  static const int CHUNK_DEEP = 2;
+  static const int CHUNK_WIDTH = 1;
+  static const int CHUNK_HEIGHT = 1;
+  static const int CHUNK_DEEP = 1;
   float noise;
 
   std::vector<float> chunk_vertex_;

@@ -39,6 +39,9 @@
     <ClCompile Include="src\gui.cc">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\ichunk.cc">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\cube.h">
@@ -60,6 +63,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\gui.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ichunk.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

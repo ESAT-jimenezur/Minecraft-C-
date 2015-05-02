@@ -18,15 +18,9 @@ int ESAT::main(int argc, char **argv) {
 
   ESAT::WindowInit(1024, 768);
   GameManager* game_manager = GameManager::Instance();
-
-  Chunk chunk;
-  chunk.init(); // Clear array and make some things
-  chunk.setupNoise(); // Fill our 3d map array with noise data
-  chunk.createMesh(); // Parse 3d map array and draw faces
-  
+  game_manager->prepare();
 
   Gui gui;
-  
 
   while (ESAT::WindowIsOpened() && !ESAT::IsSpecialKeyDown(ESAT::kSpecialKey_Escape)) {
     //ESAT::DrawBegin();

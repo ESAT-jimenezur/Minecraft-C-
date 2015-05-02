@@ -3,8 +3,12 @@
 * Jose Luis
 */
 
-#include "../include/game_manager.h"
+#include <iostream>
 
+#include "../include/game_manager.h"
+#include "../include/imaterial.h"
+//#include "../include/chunk.h"
+#include "../include/ichunk.h"
 #include <stdio.h>
 
 
@@ -15,7 +19,8 @@ GameManager* GameManager::Instance() {
 }
 
 GameManager::GameManager() {
-  EDK3::dev::GPUManager::CheckGLError("Prepare Start");
+  
+  // Delete all of this
   
   // Create a cube
   //EDK3::ref_ptr<EDK3::Geometry> geo;
@@ -28,10 +33,6 @@ GameManager::GameManager() {
   //mat_settings.alloc();
   //float color[] = { 0.0, 0.0, 0.0, 1.0 };
   //mat_settings->set_color(color);
-
-
-  // Adding root
-  game_state_.root.alloc();
 
 
   // Create a Drawable Node (Geometry+Material+Settings)
@@ -47,24 +48,88 @@ GameManager::GameManager() {
   //game_state_.root->addChild(drawable.get());
 
 
-
-  // Setup camera
-  game_state_.camera.alloc();
-  camera_position_[0] = 0;
-  camera_position_[1] = 0;
-  camera_position_[2] = 200;
-  float view[] = { 0, 0, 200 };
-  game_state_.camera->set_position(camera_position_);
-  game_state_.camera->set_clear_color(0.135f, 0.206f, 0.235f, 1.0f);
-  game_state_.camera->set_view_direction(view);
-  game_state_.camera->setupPerspective(70, 8.0 / 6.0, 1.0f, 1500.0f);
-
-  EDK3::dev::GPUManager::CheckGLError("Prepare END");
+  
 }
 
 GameState GameManager::game_state(){
   //GameManager::Instance()->game_state().root->addChild();
   return game_state_;
+}
+
+void GameManager::prepare(){
+  EDK3::dev::GPUManager::CheckGLError("Prepare Start");
+
+  // Adding root
+  game_state_.root.alloc();
+
+  // Setup camera
+  game_state_.camera.alloc();
+  camera_position_[0] = 0;
+  camera_position_[1] = 0;
+  camera_position_[2] = -20;
+  float view[] = { 0, 0, -100 };
+  game_state_.camera->set_position(camera_position_);
+  //game_state_.camera->set_clear_color(0.135f, 0.206f, 0.235f, 1.0f);
+  game_state_.camera->set_clear_color(255.0f, 255.0f, 255.0f, 255.0f);
+  game_state_.camera->set_view_direction(view);
+  game_state_.camera->setupPerspective(70, 8.0 / 6.0, 1.0f, 1500.0f);
+
+
+  // Map setup
+  EDK3::ref_ptr<iChunk> map;
+  map.alloc();
+  map->setupNoise(4.0f, 1.0f, 0.0035f);
+  map->mapSize(100, 20, 100);
+  map->setupMesh();
+
+  // Material
+  
+  EDK3::ref_ptr<iMaterial> mat;
+  EDK3::ref_ptr<iMaterial::Settings> mat_settings;
+
+  mat.alloc();
+  mat_settings.alloc();
+  float color[] = { 255.0, 0.0, 0.0, 1.0 };
+  mat_settings->set_color(color);
+
+  EDK3::ref_ptr<EDK3::Drawable> drawable;
+  mat_settings.alloc();
+  mat_settings->set_color(color);
+  drawable.alloc();
+  drawable->set_geometry(map.get());
+  drawable->set_material(mat.get());
+  drawable->set_material_settings(mat_settings.get());
+  drawable->set_position(0, 0, 0);
+  drawable->set_HPR(0.0f, 0.0f, 0.0f);
+  game_state_.root->addChild(drawable.get());
+  
+  /*
+  EDK3::ref_ptr<EDK3::MatDiffuseTexture> mat;
+  EDK3::ref_ptr<EDK3::MatDiffuseTexture::Settings> mat_settings;
+  mat.alloc();
+  mat_settings.alloc();
+  
+  EDK3::ref_ptr<EDK3::Texture> grass_texture;
+  EDK3::Texture::Load("grass.jpg", &grass_texture);
+  if (!grass_texture) {
+    std::cerr << "¡No se puede cargar la textura!" << std::endl;
+    exit(-2);
+  }
+
+  EDK3::ref_ptr<EDK3::Drawable> drawable;
+
+  //Quitamos textura   
+  mat_settings->set_texture(grass_texture.get());
+  drawable.alloc();
+  drawable->set_geometry(map.get());
+  drawable->set_material(mat.get());
+  drawable->set_material_settings(mat_settings.get());
+  drawable->set_position(0, 0, 0);
+  drawable->set_HPR(0.0f, 0.0f, 0.0f);
+  game_state_.root->addChild(drawable.get());
+  
+  */
+  EDK3::dev::GPUManager::CheckGLError("Prepare END");
 }
 
 void GameManager::render(){
@@ -143,7 +208,21 @@ void GameManager::mouseInput(){
 
   //Debug Camera Pos
   if (ESAT::IsKeyDown('P')){
-    printf("%f - %f - %f\n", camera_position_[0], camera_position_[1], camera_position_[2]);
+    if (debug_){
+      debug_ = false;
+    }else{
+      debug_ = true;
+    }
+  }
+
+  if (debug_){
+    if (ESAT::IsKeyDown('C')){ // Center Camera
+      camera_view_[0] = 0;
+      camera_view_[1] = 0;
+      camera_view_[2] = 0;
+    }
+    //printf("%f - %f - %f\n", camera_position_[0], camera_position_[1], camera_position_[2]);
+    printf("%f - %f - %f\n", camera_view_[0], camera_view_[1], camera_view_[2]);
   }
   
   game_state_.camera->set_position(camera_position_);

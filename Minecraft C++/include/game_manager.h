@@ -43,6 +43,7 @@ public:
   double degreesToRadians(double deg);
   double radiansToDegrees(double rad);
 
+  void prepare();
   void mouseInput();
   void render();
   void loop();
@@ -51,8 +52,10 @@ private:
   static GameManager *instance;
   GameManager::GameManager();
 
+  bool debug_ = false;
+
   const float camera_sensivity_ = 0.4f;
-  const float movement_speed_ = 10.0f;
+  const float movement_speed_ = 5.0f;
 
   bool first_mouse_ = true;
 
@@ -69,4 +72,4 @@ private:
   
 };
 
-#endif __GAME_MANAGER_H__
+#endif //__GAME_MANAGER_H__

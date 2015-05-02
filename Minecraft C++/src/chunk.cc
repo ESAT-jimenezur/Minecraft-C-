@@ -50,16 +50,16 @@ void Chunk::createCube(float x, float y, float z){
 void Chunk::setupNoise(){
   // -0.3 Cube; aire
   
-  for (int x = 0; x < CHUNK_WIDTH; ++x) {
+  for (int z = 0; z < CHUNK_DEEP; ++z) {
     for (int y = 0; y < CHUNK_HEIGHT; ++y) {
-      for (int z = 0; z < CHUNK_DEEP; ++z) {
+      for (int x = 0; x < CHUNK_WIDTH; ++x) {
         noise = octave_noise_3d(3, 1, 0.02f, x, y, z);
         if (noise <= 0.3f){
-          //createCube(x * 5, y * 5, z * 5);
-          map3d[x][y][z] = 1.0f;
+          createCube(x * 5, y * 5, z * 5);
+          //map3d[x][y][z] = 1.0f;
         }
         else{
-          map3d[x][y][z] = noise;
+          //map3d[x][y][z] = noise;
         }
       }
     }
@@ -79,7 +79,7 @@ void Chunk::createMesh(){
   const unsigned int num_uvs = 48;
   const unsigned int num_normals = 72;
 
-  const float vertex[num_vertex] = {
+  const float vertex[num_vertex]={
     // face 1 (xy plane, z=1 y=pos)
     neg, neg, pos, // 0 1 2
     pos, neg, pos, // 3 4 5
@@ -171,9 +171,9 @@ void Chunk::createMesh(){
 
 
 
-  for (int x = 0; x < CHUNK_WIDTH; ++x) {
+  for (int z = 0; z < CHUNK_WIDTH; ++z) {
     for (int y = 0; y < CHUNK_HEIGHT; ++y) {
-      for (int z = 0; z < CHUNK_DEEP; ++z) {
+      for (int x = 0; x < CHUNK_DEEP; ++x) {
         //printf("%f\n", map3d[x][y][z]);
         // Cube
         if (map3d[x][y][z] == 1.0f){
@@ -230,20 +230,29 @@ bool Chunk::bindAttribute(const EDK3::Attribute a, unsigned int where_to_bind_at
 
   switch (a){
   case EDK3::A_POSITION:
-    EDK3::dev::GPUManager::Instance()->enableVertexAttribute(buffer_.get(),
-      where_to_bind_attribute, EDK3::T_FLOAT_3, false, 0, 0);
+    EDK3::dev::GPUManager::Instance()->enableVertexAttribute(
+      buffer_.get(),
+      where_to_bind_attribute, 
+      EDK3::T_FLOAT_3, 
+      false, 0, 0);
     return true;
   case EDK3::A_UV:
-    EDK3::dev::GPUManager::Instance()->enableVertexAttribute(buffer_.get(),
+    EDK3::dev::GPUManager::Instance()->enableVertexAttribute(
+      buffer_.get(),
       where_to_bind_attribute,
       EDK3::T_FLOAT_2,
-      false, sizeof(float) * chunk_vertex_.size(), 0);
+      false, 
+      sizeof(float) * chunk_vertex_.size(), 
+      0);
     return true;
   case EDK3::A_NORMAL:
-    EDK3::dev::GPUManager::Instance()->enableVertexAttribute(buffer_.get(),
+    EDK3::dev::GPUManager::Instance()->enableVertexAttribute(
+      buffer_.get(),
       where_to_bind_attribute,
       EDK3::T_FLOAT_3,
-      true, sizeof(float) * chunk_vertex_.size() + sizeof(float) * chunk_uv_.size(), 0);
+      true, 
+      sizeof(float) * chunk_vertex_.size() + sizeof(float) * chunk_uv_.size(), 
+      0);
     return true;
   }
 
@@ -251,6 +260,7 @@ bool Chunk::bindAttribute(const EDK3::Attribute a, unsigned int where_to_bind_at
   return false;
 }
 
-void Chunk::render(){
+void Chunk::render() const{
+  printf("ASD");
   EDK3::dev::GPUManager::Instance()->drawElements(EDK3::dev::GPUManager::DrawMode::kDrawMode_Triangles, chunk_index_.size(), buffer_.get(), EDK3::T_UINT, sizeof(float)*chunk_vertex_.size() + sizeof(float)*chunk_uv_.size() + sizeof(float)*chunk_normal_.size());
 }
