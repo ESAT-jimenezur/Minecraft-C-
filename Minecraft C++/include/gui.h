@@ -2,7 +2,7 @@
 #define __GUI_H__
 
 #include <EDK3\imgui.h>
-#include <EDK3\node.h>
+#include "game_manager.h"
 
 class Gui{
 
@@ -13,9 +13,10 @@ public:
 
   void init();
   void show();
-  
+
 private:
-  
+
+  void getSceneObjects();
   void createDebugHeader();
 
 };
