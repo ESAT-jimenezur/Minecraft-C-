@@ -41,7 +41,7 @@ private:
   // Map Size
   int chunk_width_;
   int chunk_height_;
-  int chunk_deep;
+  int chunk_deep_;
 
   std::vector<float> chunk_vertex_;
   std::vector<float> chunk_normal_;
@@ -52,6 +52,8 @@ private:
   unsigned int total_indexes_;
 
   EDK3::ref_ptr<EDK3::dev::Buffer> buffer_;
+
+  int highest_level_;
 
   int cube_side_size_;
 

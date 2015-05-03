@@ -10,23 +10,16 @@ void Gui::init(){
 }
 
 void Gui::show(){
-  ImGui::Begin("Game Objects");
-
-  createObjectsHeader();
-  getSceneObjects();
+  //createDebugHeader();
 
   ImGui::End();
   ImGui::Render();
 }
 
-void Gui::createObjectsHeader(){
-  if (ImGui::CollapsingHeader("Create Object")){
-    ImGui::Button("Boton");
+void Gui::createDebugHeader(){
+  if (ImGui::CollapsingHeader("Debug")){
+    //ImGui::Text("ASDAS");
   }
   
-  
-}
-
-void Gui::getSceneObjects(){
   
 }

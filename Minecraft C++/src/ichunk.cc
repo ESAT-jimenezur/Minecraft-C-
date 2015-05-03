@@ -7,7 +7,9 @@ iChunk::iChunk(){
 
   chunk_width_ = 1;
   chunk_height_ = 1;
-  chunk_deep = 1;
+  chunk_deep_ = 1;
+
+  highest_level_ = 0.3;
 
   cube_side_size_ = 1;
 }
@@ -21,7 +23,7 @@ void iChunk::setupNoise(float octaves, float persistence, float scale){
 void iChunk::mapSize(int width, int height, int deep){
   chunk_width_ = width;
   chunk_height_ = height;
-  chunk_deep = deep;
+  chunk_deep_ = deep;
 }
 
 void iChunk::cubeSideSize(int size){
@@ -175,12 +177,12 @@ void iChunk::setupMesh(){
 
   std::vector<unsigned int> chunk_index;
 
-  for (int z = 0; z < chunk_deep; ++z) {
+  for (int z = 0; z < chunk_deep_; ++z) {
     for (int y = 0; y < chunk_height_; ++y) {
       for (int x = 0; x < chunk_width_; ++x) {
         
         float noise = octave_noise_3d(octaves_, persistence_, scale_, x, y, z);
-        if (noise < 0.3){
+        if (noise < highest_level_){
           bool all_faces[6];
           checkFace(x, y, z, all_faces);
           if (all_faces){
@@ -196,8 +198,8 @@ void iChunk::setupMesh(){
 
                 for (int k = 0; k < 12; k++){
                   chunk_vertex_.push_back(cube_faces[i].vertex[k] + (x * size));
-                  chunk_vertex_.push_back(cube_faces[i].vertex[++k] + (y *size));
-                  chunk_vertex_.push_back(cube_faces[i].vertex[++k] + (z *size));
+                  chunk_vertex_.push_back(cube_faces[i].vertex[++k] + (y * size));
+                  chunk_vertex_.push_back(cube_faces[i].vertex[++k] + (z * size));
                 }
 
                 int p_size = chunk_vertex_.size() / 3;
@@ -265,54 +267,52 @@ void iChunk::checkFace(int x, int y, int z, bool* face_n){
   int faces_to_render = 0;
 
   // Face 0
-  if (octave_noise_3d(octaves_, persistence_, scale_, x, y, z - 1)){
+  if (octave_noise_3d(octaves_, persistence_, scale_, x, y, z + 1) >= highest_level_ || z + 1 == chunk_deep_){
     face_n[0] = true; ++faces_to_render;
   }else{
     face_n[0] = false;
   }
 
   // Face 1
-  if (octave_noise_3d(octaves_, persistence_, scale_, x + 1, y, z)){
+  if (octave_noise_3d(octaves_, persistence_, scale_, x + 1, y, z) >= highest_level_ || x + 1 == chunk_width_){
     face_n[1] = true; ++faces_to_render;
   }
   else{
     face_n[1] = false;
   }
-  
+ 
   // Face 2
-  if (octave_noise_3d(octaves_, persistence_, scale_, x, y, z + 1)){
+  if (octave_noise_3d(octaves_, persistence_, scale_, x, y, z - 1) >= highest_level_ || z - 1 == 0){
     face_n[2] = true; ++faces_to_render;
   }
   else{
     face_n[2] = false;
   }
-
+  
   // Face 3
-  if (octave_noise_3d(octaves_, persistence_, scale_, x - 1, y, z)){
+  if (octave_noise_3d(octaves_, persistence_, scale_, x - 1, y, z) >= highest_level_ || x - 1 == 0){
     face_n[3] = true; ++faces_to_render;
   }
   else{
     face_n[3] = false;
   }
-
+  
   // Face 4
-  if (octave_noise_3d(octaves_, persistence_, scale_, x, y + 1, z)){
+  if (octave_noise_3d(octaves_, persistence_, scale_, x, y + 1, z) >= highest_level_ || y + 1 == chunk_height_){
     face_n[4] = true; ++faces_to_render;
   }
   else{
     face_n[4] = false;
   }
-
+  
   // Face 5
-  if (octave_noise_3d(octaves_, persistence_, scale_, x, y - 1, z)){
+  if (octave_noise_3d(octaves_, persistence_, scale_, x, y - 1, z) >= highest_level_ || y - 1 == 0){
     face_n[5] = true; ++faces_to_render;
   }
   else{
     face_n[5] = false;
   }
-
-
-
+  
 }
 
 

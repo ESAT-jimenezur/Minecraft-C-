@@ -96,6 +96,17 @@ bool iMaterial::enable(const EDK3::MaterialSettings *mat_settings)const{
 
   //program_->set_uniform_value(color, EDK3::Type::T_FLOAT_4, settings->color());
 
+  const iMaterial::Settings* settings = dynamic_cast<const iMaterial::Settings*>(mat_settings);
+  if (settings){
+    // Texture
+    int texture_index = 0;
+    settings->texture()->bind(texture_index);
+    int u_texture_index = program_->get_uniform_position("u_texture");
+    program_->set_uniform_value(u_texture_index, EDK3::T_INT_1, &texture_index);
+  }
+  
+  
+
   return true;
 }
 

@@ -2,6 +2,7 @@
 #define __GUI_H__
 
 #include <EDK3\imgui.h>
+#include <EDK3\node.h>
 
 class Gui{
 
@@ -15,8 +16,7 @@ public:
   
 private:
   
-  void getSceneObjects();
-  void createObjectsHeader();
+  void createDebugHeader();
 
 };
 

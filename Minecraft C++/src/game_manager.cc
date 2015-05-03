@@ -78,12 +78,12 @@ void GameManager::prepare(){
   // Map setup
   EDK3::ref_ptr<iChunk> map;
   map.alloc();
-  map->setupNoise(4.0f, 1.0f, 0.0035f);
-  map->mapSize(100, 20, 100);
+  map->setupNoise(7.0f, 1.5f, 0.0005f);
+  map->mapSize(150, 30, 150);
   map->setupMesh();
 
   // Material
-  
+  /*
   EDK3::ref_ptr<iMaterial> mat;
   EDK3::ref_ptr<iMaterial::Settings> mat_settings;
 
@@ -102,33 +102,35 @@ void GameManager::prepare(){
   drawable->set_position(0, 0, 0);
   drawable->set_HPR(0.0f, 0.0f, 0.0f);
   game_state_.root->addChild(drawable.get());
+  */
   
-  /*
-  EDK3::ref_ptr<EDK3::MatDiffuseTexture> mat;
-  EDK3::ref_ptr<EDK3::MatDiffuseTexture::Settings> mat_settings;
+  EDK3::ref_ptr<iMaterial> mat;
+  EDK3::ref_ptr<iMaterial::Settings> mat_settings;
   mat.alloc();
   mat_settings.alloc();
   
+
   EDK3::ref_ptr<EDK3::Texture> grass_texture;
   EDK3::Texture::Load("grass.jpg", &grass_texture);
   if (!grass_texture) {
     std::cerr << "¡No se puede cargar la textura!" << std::endl;
     exit(-2);
   }
+  mat_settings->set_texture(grass_texture.get());
+
 
   EDK3::ref_ptr<EDK3::Drawable> drawable;
 
-  //Quitamos textura   
-  mat_settings->set_texture(grass_texture.get());
   drawable.alloc();
+  drawable->set_name("map");
   drawable->set_geometry(map.get());
   drawable->set_material(mat.get());
   drawable->set_material_settings(mat_settings.get());
-  drawable->set_position(0, 0, 0);
-  drawable->set_HPR(0.0f, 0.0f, 0.0f);
+  drawable->set_position(-300, -100, -500);
+  drawable->set_HPR(0, 0, 0);
   game_state_.root->addChild(drawable.get());
   
-  */
+  
   EDK3::dev::GPUManager::CheckGLError("Prepare END");
 }
 
@@ -235,4 +237,14 @@ double GameManager::degreesToRadians(double deg) {
 }
 double GameManager::radiansToDegrees(double rad) {
   return rad * 180 / M_PI;
+}
+
+float GameManager::getCameraPosX(){
+  return camera_position_[0];
+}
+float GameManager::getCameraPosY(){
+  return camera_position_[1];
+}
+float GameManager::getCameraPosZ(){
+  return camera_position_[2];
 }

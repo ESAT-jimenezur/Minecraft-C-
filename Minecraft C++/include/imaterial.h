@@ -17,6 +17,7 @@
 #include <EDK3\materialsettings.h>
 
 
+
   class iMaterial : public EDK3::Material{
 
   public:
@@ -36,12 +37,23 @@
       Settings() {}
       void set_color(const float v[4]) { memcpy(data_, v, sizeof(data_)); }
       const float *color() const { return data_; }
+
+      // Texture
+      void set_texture(EDK3::Texture *t) { texture_ = t; }
+      EDK3::Texture* texture() { return texture_.get(); }
+      const EDK3::Texture* texture() const { return texture_.get(); }
+
+      void set_normal_texture(EDK3::Texture *t) { normal_texture_ = t; }
+      EDK3::Texture* normal_texture() { return normal_texture_.get(); }
+      const EDK3::Texture* normal_texture() const { return normal_texture_.get(); }
     protected:
       virtual ~Settings() {}
     private:
       Settings(const Settings&);
       Settings& operator=(const Settings&);
       float data_[4];
+      EDK3::ref_ptr<EDK3::Texture> texture_;
+      EDK3::ref_ptr<EDK3::Texture> normal_texture_;
     };
 
   private:

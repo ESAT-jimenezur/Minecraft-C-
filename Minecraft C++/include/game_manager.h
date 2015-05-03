@@ -38,6 +38,9 @@ public:
 
   // Getters
   GameState game_state();
+  float getCameraPosX();
+  float getCameraPosY();
+  float getCameraPosZ();
 
   //Utils
   double degreesToRadians(double deg);
@@ -47,6 +50,7 @@ public:
   void mouseInput();
   void render();
   void loop();
+
 
 private:
   static GameManager *instance;

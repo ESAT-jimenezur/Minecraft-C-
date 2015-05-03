@@ -27,7 +27,7 @@ int ESAT::main(int argc, char **argv) {
 
 
     game_manager->loop();
-    gui.show();
+    //gui.show();
 
     //ESAT::DrawEnd();
     ESAT::WindowFrame();
