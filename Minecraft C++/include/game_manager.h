@@ -20,6 +20,15 @@
 #include "../include/imaterial.h"
 #include "../include/vector3.h"
 
+
+// Lua Include
+extern "C"{
+  #include "../lua/lua.h"
+  #include "../lua/lauxlib.h"
+  #include "../lua/lualib.h"
+}
+
+
 # define M_PI           3.14159265358979323846  /* pi */
 
 struct GameState{
@@ -50,7 +59,7 @@ public:
   void mouseInput();
   void render();
   void loop();
-
+  void loadLuaData();
 
 private:
   static GameManager *instance;

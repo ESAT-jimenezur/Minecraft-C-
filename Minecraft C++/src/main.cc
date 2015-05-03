@@ -14,10 +14,12 @@
 
 
 
+
 int ESAT::main(int argc, char **argv) {
 
   ESAT::WindowInit(1024, 768);
   GameManager* game_manager = GameManager::Instance();
+  game_manager->loadLuaData();
   game_manager->prepare();
 
   Gui gui;

@@ -111,7 +111,7 @@ void GameManager::prepare(){
   
 
   EDK3::ref_ptr<EDK3::Texture> grass_texture;
-  EDK3::Texture::Load("grass.jpg", &grass_texture);
+  EDK3::Texture::Load("grass.png", &grass_texture);
   if (!grass_texture) {
     std::cerr << "¡No se puede cargar la textura!" << std::endl;
     exit(-2);
@@ -126,7 +126,7 @@ void GameManager::prepare(){
   drawable->set_geometry(map.get());
   drawable->set_material(mat.get());
   drawable->set_material_settings(mat_settings.get());
-  drawable->set_position(-300, -100, -500);
+  drawable->set_position(0, -50, -50);
   drawable->set_HPR(0, 0, 0);
   game_state_.root->addChild(drawable.get());
   
@@ -229,6 +229,13 @@ void GameManager::mouseInput(){
   
   game_state_.camera->set_position(camera_position_);
   game_state_.camera->set_view_direction(camera_view_);
+}
+
+void GameManager::loadLuaData(){
+  lua_State *L = luaL_newstate();
+  luaL_openlibs(L);
+  luaL_dostring(L, "print('hi')");
+  lua_close(L);
 }
 
 

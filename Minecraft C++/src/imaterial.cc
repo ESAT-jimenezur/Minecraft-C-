@@ -64,7 +64,7 @@ iMaterial::iMaterial(){
 }
 
 unsigned int iMaterial::num_attributes_required() const {
-  return 2;
+  return 3;
 }
 
 EDK3::Attribute iMaterial::attribute_at_index(const unsigned int attrib_idx) const {
@@ -73,6 +73,8 @@ EDK3::Attribute iMaterial::attribute_at_index(const unsigned int attrib_idx) con
     return EDK3::A_POSITION;
   case 1:
     return EDK3::A_NORMAL;
+  case 2:
+    return EDK3::A_UV;
   }
 
   return EDK3::A_NONE;
@@ -84,6 +86,8 @@ EDK3::Type iMaterial::attribute_type_at_index(const unsigned int attrib_idx) con
       return EDK3::T_FLOAT_3;
     case 1: 
       return EDK3::T_FLOAT_3;
+    case 2:
+      return EDK3::T_FLOAT_2;
   }
   return EDK3::T_NONE;
 }

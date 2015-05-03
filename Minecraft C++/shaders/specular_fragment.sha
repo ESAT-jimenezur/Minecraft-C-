@@ -2,7 +2,11 @@
 in vec3 o_normal; 
 in vec3 o_toLight; 
 in vec3 o_toCamera; 
-    
+in vec2	o_texture_coords;
+
+// texture with diffuese color of the object
+uniform sampler2D u_texture;
+
 out vec4 resultingColor; 
     
 vec3 u_lightAmbientIntensity = vec3(1.0, 1.0, 0); 
@@ -37,6 +41,9 @@ void main(){
     vec3 V = normalize(o_toCamera);
     vec3 N = normalize(o_normal);
 
-    resultingColor.xyz = diffuseLighting(N, L) + specularLighting(N, L, V);
+	// diffuse color of the object from texture
+	vec3 specColor = texture(u_texture, o_texture_coords).rgb;
+
+    resultingColor.xyz = specColor * (diffuseLighting(N, L) + specularLighting(N, L, V));
     resultingColor.a = 1;
 }
