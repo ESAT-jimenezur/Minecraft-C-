@@ -245,5 +245,14 @@
     <ClInclude Include="lua\lzio.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="include\LuaBridge\LuaBridge.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LuaBridge\RefCountedObject.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LuaBridge\RefCountedPtr.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

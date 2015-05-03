@@ -52,13 +52,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\ESAT_EDK3\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\lua;.\include\LuaBridge;..\ESAT_EDK3\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\ESAT_EDK3\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OpenGL32.lib;ESAT_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\LUA\bin;..\ESAT_EDK3\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OpenGL32.lib;ESAT_d.lib;lua52.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -130,6 +130,9 @@
     <ClInclude Include="include\gui.h" />
     <ClInclude Include="include\ichunk.h" />
     <ClInclude Include="include\imaterial.h" />
+    <ClInclude Include="include\LuaBridge\LuaBridge.h" />
+    <ClInclude Include="include\LuaBridge\RefCountedObject.h" />
+    <ClInclude Include="include\LuaBridge\RefCountedPtr.h" />
     <ClInclude Include="include\simplexnoise.h" />
     <ClInclude Include="include\vector3.h" />
     <ClInclude Include="lua\lapi.h" />

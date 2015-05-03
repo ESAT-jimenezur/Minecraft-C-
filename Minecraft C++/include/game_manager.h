@@ -7,6 +7,7 @@
 #define __GAME_MANAGER_H__
 
 #include <math.h>
+#include <iostream>
 
 #include <EDK3/geometry.h>
 #include <EDK3/camera.h>
@@ -20,14 +21,14 @@
 #include "../include/imaterial.h"
 #include "../include/vector3.h"
 
-
+#include "LuaBridge\LuaBridge.h"
 // Lua Include
 extern "C"{
   #include "../lua/lua.h"
   #include "../lua/lauxlib.h"
   #include "../lua/lualib.h"
 }
-
+using namespace luabridge;
 
 # define M_PI           3.14159265358979323846  /* pi */
 
