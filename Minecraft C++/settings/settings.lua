@@ -1,10 +1,9 @@
-camera = {
-    pos = {
-         X = 0,
-         Y = 0,
-		 Z = 0
-    },
-    --filename = "res/images/player.png",
-    --HP = 20,
--- you can also have comments
-}
+-- Camera Setup
+cameraPosX = 0.0
+cameraPosY = 0.0
+cameraPosZ = -20.0
+cameraViewX = 0.0
+cameraViewY = 0.0
+cameraViewZ = -100.0
+
+--

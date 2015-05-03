@@ -51,6 +51,9 @@ public:
   float getCameraPosX();
   float getCameraPosY();
   float getCameraPosZ();
+  float getCameraViewX();
+  float getCameraViewY();
+  float getCameraViewZ();
 
   //Utils
   double degreesToRadians(double deg);
@@ -81,6 +84,7 @@ private:
   float camera_yaw_;
 
   float camera_position_[3];
+  float camera_view_[3];
 
   GameState game_state_;
   

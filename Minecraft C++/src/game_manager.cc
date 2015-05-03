@@ -19,36 +19,6 @@ GameManager* GameManager::Instance() {
 }
 
 GameManager::GameManager() {
-  
-  // Delete all of this
-  
-  // Create a cube
-  //EDK3::ref_ptr<EDK3::Geometry> geo;
-  //EDK3::CreateCube(&geo, 40, true, true);
-
-  //EDK3::ref_ptr<iMaterial> mat;
-  //EDK3::ref_ptr<iMaterial::Settings> mat_settings;
-
-  //mat.alloc();
-  //mat_settings.alloc();
-  //float color[] = { 0.0, 0.0, 0.0, 1.0 };
-  //mat_settings->set_color(color);
-
-
-  // Create a Drawable Node (Geometry+Material+Settings)
-  //EDK3::ref_ptr<EDK3::Drawable> drawable;
-  //mat_settings.alloc();
-  //mat_settings->set_color(color);
-  //drawable.alloc();
-  //drawable->set_geometry(geo.get());
-  //drawable->set_material(mat.get());
-  //drawable->set_material_settings(mat_settings.get());
-  //drawable->set_position(0.0f, 0.0f, -20.0f);
-  //drawable->set_HPR(0.0f, 0.0f, 0.0f);
-  //game_state_.root->addChild(drawable.get());
-
-
-  
 }
 
 GameState GameManager::game_state(){
@@ -64,14 +34,17 @@ void GameManager::prepare(){
 
   // Setup camera
   game_state_.camera.alloc();
-  camera_position_[0] = 0;
-  camera_position_[1] = 0;
-  camera_position_[2] = -20;
-  float view[] = { 0, 0, -100 };
+  
+  //Camera Position is not useful anymore... Now is get by lua
+  //camera_position_[0] = 0;
+  //camera_position_[1] = 0;
+  //camera_position_[2] = -20;
+  //float view[] = { 0, 0, -100 };
+
   game_state_.camera->set_position(camera_position_);
   //game_state_.camera->set_clear_color(0.135f, 0.206f, 0.235f, 1.0f);
   game_state_.camera->set_clear_color(255.0f, 255.0f, 255.0f, 255.0f);
-  game_state_.camera->set_view_direction(view);
+  game_state_.camera->set_view_direction(camera_view_);
   game_state_.camera->setupPerspective(70, 8.0 / 6.0, 1.0f, 1500.0f);
 
 
@@ -83,27 +56,6 @@ void GameManager::prepare(){
   map->setupMesh();
 
   // Material
-  /*
-  EDK3::ref_ptr<iMaterial> mat;
-  EDK3::ref_ptr<iMaterial::Settings> mat_settings;
-
-  mat.alloc();
-  mat_settings.alloc();
-  float color[] = { 255.0, 0.0, 0.0, 1.0 };
-  mat_settings->set_color(color);
-
-  EDK3::ref_ptr<EDK3::Drawable> drawable;
-  mat_settings.alloc();
-  mat_settings->set_color(color);
-  drawable.alloc();
-  drawable->set_geometry(map.get());
-  drawable->set_material(mat.get());
-  drawable->set_material_settings(mat_settings.get());
-  drawable->set_position(0, 0, 0);
-  drawable->set_HPR(0.0f, 0.0f, 0.0f);
-  game_state_.root->addChild(drawable.get());
-  */
-  
   EDK3::ref_ptr<iMaterial> mat;
   EDK3::ref_ptr<iMaterial::Settings> mat_settings;
   mat.alloc();
@@ -186,7 +138,9 @@ void GameManager::mouseInput(){
   
   camera_front_ = camera_front_.normalize();
   
-  float camera_view_[] = { camera_front_.x, camera_front_.y, camera_front_.z };
+  camera_view_[0] = camera_front_.x;
+  camera_view_[1] = camera_front_.y;
+  camera_view_[2] = camera_front_.z;
 
   float n_camera_pos_[3];
   if (ESAT::IsKeyDown('W')){
@@ -207,25 +161,6 @@ void GameManager::mouseInput(){
     camera_position_[1] = camera_position_[1] - n_camera_pos_[1];
     camera_position_[2] = camera_position_[2] - n_camera_pos_[2];
   }
-
-  //Debug Camera Pos
-  if (ESAT::IsKeyDown('P')){
-    if (debug_){
-      debug_ = false;
-    }else{
-      debug_ = true;
-    }
-  }
-
-  if (debug_){
-    if (ESAT::IsKeyDown('C')){ // Center Camera
-      camera_view_[0] = 0;
-      camera_view_[1] = 0;
-      camera_view_[2] = 0;
-    }
-    //printf("%f - %f - %f\n", camera_position_[0], camera_position_[1], camera_position_[2]);
-    printf("%f - %f - %f\n", camera_view_[0], camera_view_[1], camera_view_[2]);
-  }
   
   game_state_.camera->set_position(camera_position_);
   game_state_.camera->set_view_direction(camera_view_);
@@ -233,15 +168,31 @@ void GameManager::mouseInput(){
 
 void GameManager::loadLuaData(){
   lua_State* L = luaL_newstate();
-  luaL_dofile(L, "settings/test.lua");
+  luaL_dofile(L, "settings/settings.lua");
   luaL_openlibs(L);
   lua_pcall(L, 0, 0, 0);
-  LuaRef s = getGlobal(L, "testString");
-  LuaRef n = getGlobal(L, "number");
-  std::string luaString = s.cast<std::string>();
-  int answer = n.cast<int>();
-  std::cout << luaString << std::endl;
-  std::cout << "And here's our number:" << answer << std::endl;
+
+  // Camera Position
+  // X
+  LuaRef camPosX = getGlobal(L, "cameraPosX");
+  camera_position_[0] = camPosX.cast<float>();
+  // Y
+  LuaRef camPosY = getGlobal(L, "cameraPosY");
+  camera_position_[1] = camPosY.cast<float>();
+  // Z
+  LuaRef camPosZ = getGlobal(L, "cameraPosZ");
+  camera_position_[2] = camPosZ.cast<float>();
+
+  // Camera View
+  // X
+  LuaRef camViewX = getGlobal(L, "cameraViewX");
+  camera_view_[0] = camViewX.cast<float>();
+  // Y
+  LuaRef camViewY = getGlobal(L, "cameraViewY");
+  camera_view_[1] = camViewY.cast<float>();
+  // Z
+  LuaRef camViewZ = getGlobal(L, "cameraViewZ");
+  camera_view_[2] = camViewZ.cast<float>();
 }
 
 
@@ -260,4 +211,14 @@ float GameManager::getCameraPosY(){
 }
 float GameManager::getCameraPosZ(){
   return camera_position_[2];
+}
+
+float GameManager::getCameraViewX(){
+  return camera_view_[0];
+}
+float GameManager::getCameraViewY(){
+  return camera_view_[1];
+}
+float GameManager::getCameraViewZ(){
+  return camera_view_[2];
 }
