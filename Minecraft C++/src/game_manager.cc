@@ -42,8 +42,8 @@ void GameManager::prepare(){
   //float view[] = { 0, 0, -100 };
 
   game_state_.camera->set_position(camera_position_);
-  //game_state_.camera->set_clear_color(0.135f, 0.206f, 0.235f, 1.0f);
-  game_state_.camera->set_clear_color(255.0f, 255.0f, 255.0f, 255.0f);
+  game_state_.camera->set_clear_color(0.0f, 1.0f, 1.0f, 1.0f);
+  //game_state_.camera->set_clear_color(255.0f, 255.0f, 255.0f, 255.0f);
   game_state_.camera->set_view_direction(camera_view_);
   game_state_.camera->setupPerspective(70, 8.0 / 6.0, 1.0f, 1500.0f);
 
@@ -161,6 +161,8 @@ void GameManager::mouseInput(){
     camera_position_[1] = camera_position_[1] - n_camera_pos_[1];
     camera_position_[2] = camera_position_[2] - n_camera_pos_[2];
   }
+
+  
   
   game_state_.camera->set_position(camera_position_);
   game_state_.camera->set_view_direction(camera_view_);

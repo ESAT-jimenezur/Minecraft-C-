@@ -21,6 +21,7 @@
 #include "../include/imaterial.h"
 #include "../include/vector3.h"
 
+
 #include "LuaBridge\LuaBridge.h"
 // Lua Include
 extern "C"{
@@ -42,6 +43,7 @@ public:
 
   const int kScreenWidth = 1024;
   const int kScreenHeight = 768;
+ 
 
   // Singleton instance
   static GameManager *Instance();

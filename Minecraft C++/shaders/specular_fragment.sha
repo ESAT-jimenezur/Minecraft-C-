@@ -9,14 +9,15 @@ uniform sampler2D u_texture;
 
 out vec4 resultingColor; 
     
-vec3 u_lightAmbientIntensity = vec3(1.0, 1.0, 0); 
+vec3 u_lightAmbientIntensity = vec3(1.0, 0.7, 0); 
 vec3 u_lightDiffuseIntensity = vec3(1.0, 1.0, 0);
 vec3 u_lightSpecularIntensity = vec3(1.0, 1.0, 0);
     
 vec3 u_matAmbientReflectance = vec3(1, 1, 1);
 vec3 u_matDiffuseReflectance = vec3(1, 1, 1);
 vec3 u_matSpecularReflectance = vec3(1, 1, 1);
-float u_matShininess = 5000;
+
+float u_matShininess = 900;
     
 vec3 ambientLighting(){ 
     return u_matAmbientReflectance * u_lightAmbientIntensity; 
@@ -41,9 +42,9 @@ void main(){
     vec3 V = normalize(o_toCamera);
     vec3 N = normalize(o_normal);
 
-	// diffuse color of the object from texture
-	vec3 specColor = texture(u_texture, o_texture_coords).rgb;
+	  // diffuse color of the object from texture
+	  vec3 specColor = texture(u_texture, o_texture_coords).rgb;
 
-    resultingColor.xyz = specColor * (diffuseLighting(N, L) + specularLighting(N, L, V));
+    resultingColor.xyz = specColor * ( ambientLighting() + diffuseLighting(N, L) + specularLighting(N, L, V));
     resultingColor.a = 1;
 }

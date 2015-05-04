@@ -95,11 +95,6 @@ EDK3::Type iMaterial::attribute_type_at_index(const unsigned int attrib_idx) con
 bool iMaterial::enable(const EDK3::MaterialSettings *mat_settings)const{
   program_->use();
 
-  //int color = program_->get_uniform_position("u_color");
-  //const Settings* settings = dynamic_cast<const Settings*>(mat_settings);
-
-  //program_->set_uniform_value(color, EDK3::Type::T_FLOAT_4, settings->color());
-
   const iMaterial::Settings* settings = dynamic_cast<const iMaterial::Settings*>(mat_settings);
   if (settings){
     // Texture

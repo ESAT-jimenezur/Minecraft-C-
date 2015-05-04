@@ -21,6 +21,7 @@ void main(){
    vec4 worldPosition = u_model_matrix * vec4(i_position, 1);
 
    o_normal = vec3(normalize(u_model_matrix * vec4(i_normal,0)));
+
    o_toLight = normalize(u_lightPosition - worldPosition.xyz);
    o_toCamera = normalize(u_cameraPosition - worldPosition.xyz);
    // texture coordinates to fragment shader

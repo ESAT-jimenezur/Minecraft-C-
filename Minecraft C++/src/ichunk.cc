@@ -183,7 +183,7 @@ void iChunk::setupMesh(){
         
         float noise = octave_noise_3d(octaves_, persistence_, scale_, x, y, z);
         if (noise < highest_level_){
-          bool all_faces[6];
+          bool all_faces[6] = {0,0,0,0,0,0};
           checkFace(x, y, z, all_faces);
           if (all_faces){
             for (int i = 0; i < 6; ++i){
